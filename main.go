@@ -2,10 +2,22 @@ package main
 
 import (
 	"fmt"
+	"html/template"
 	"net/http"
 )
 
-func Sayhello(writer http.ResponseWriter, request *http.Request) {
+func Sayhello(w http.ResponseWriter, r *http.Request) {
+	t, err := template.ParseFiles("./tpl/hello.tmpl")
+	if err != nil {
+		fmt.Println("template init failed!")
+		return
+	}
+	name := "小王子"
+	err = t.Execute(w, name)
+	if err != nil {
+		fmt.Println("render template failed!")
+		return
+	}
 
 }
 
